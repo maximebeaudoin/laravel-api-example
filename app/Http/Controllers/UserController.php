@@ -86,9 +86,20 @@ class UserController extends Controller
     {
         $user = $this->userRepository->find($userId);
 
-        // @todo fix validation for email update, maybe just unset the email if its the same with
-        // the user before validating
-        (new UpdateUserValidator())->validate($request->all());
+        // Little tricks to prevent email unique validation to be performed
+        // if the email hasn't changed.
+        if ($request->input("email") === $user->email) {
+            $dataToValidate = [
+                'name' => $request->input('name')
+            ];
+        } else {
+            $dataToValidate = [
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+            ];
+        }
+
+        (new UpdateUserValidator())->validate($dataToValidate);
 
         $user = app(UpdateUser::class)->handle(
             $user,
@@ -96,9 +107,7 @@ class UserController extends Controller
             $request->input('email', $user->email)
         );
 
-        return $this->response
-            ->setStatusCode(SymfonyResponse::HTTP_CREATED)
-            ->withItem($user, new UserTransformer());
+        return $this->response->withItem($user, new UserTransformer());
     }
 
     /**

@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0"
     },
     "require-dev": {
+        "behat/behat": "^3.6",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9",
         "mockery/mockery": "^1.3.1",
@@ -67,6 +68,7 @@
             "pdepend --jdepend-chart=/tmp/jdepend.svg --overview-pyramid=/tmp/pyramid.svg app/",
             "phpcpd app/",
             "phpcs --standard=phpcs.xml app/"
-        ]
+        ],
+        "test:features": "behat --colors --format=progress"
     }
 }

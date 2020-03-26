@@ -1,0 +1,6 @@
+default:
+    gherkin:
+        cache: ~
+    suites:
+        default:
+            paths: [ "%paths.base%/features" ]
