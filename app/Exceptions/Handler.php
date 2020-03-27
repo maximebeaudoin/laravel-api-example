@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use EllipseSynergie\ApiResponse\Contracts\Response;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -32,7 +33,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -45,8 +46,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
@@ -56,16 +57,25 @@ class Handler extends ExceptionHandler
         /** @var Response $response */
         $response = app(Response::class);
 
-        if ($exception instanceof ModelNotFoundException) {
-            return $response->errorNotFound($exception->getMessage());
-        }
+        switch (true) {
 
-        if ($exception instanceof ValidatorException) {
+            // When a entity wasn't found in database
+            case $exception instanceof ModelNotFoundException:
+                return $response->errorNotFound($exception->getMessage());
+                break;
 
-            return $response->setStatusCode(SymfonyResponse::HTTP_UNPROCESSABLE_ENTITY)->withError(
-                $exception->errors()->toArray(),
-                'VALIDATION-FAILED'
-            );
+            // Request validation error
+            case $exception instanceof ValidatorException:
+                return $response->setStatusCode(SymfonyResponse::HTTP_UNPROCESSABLE_ENTITY)->withError(
+                    $exception->errors()->toArray(),
+                    'VALIDATION-FAILED'
+                );
+                break;
+
+            //Authentication failed
+            case $exception instanceof AuthenticationException:
+                return $response->errorUnauthorized($exception->getMessage());
+                break;
         }
 
         return parent::render($request, $exception);
