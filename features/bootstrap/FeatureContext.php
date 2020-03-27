@@ -57,7 +57,7 @@ class FeatureContext extends TestCase implements Context
      *
      * @var string
      */
-    protected $accessToken = '';
+    protected $accessToken = 'IrgPHM5PBQcYkGCLpWxjvyhP28n3ElXkdPAYKfL6IPYasQurjmmN9roiG79xZ7ahZNGajkCEmTVUTNPM';
 
     /**
      * @var array

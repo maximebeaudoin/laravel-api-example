@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 Route::group([
     'prefix' => 'users',
-    'as' => 'users'
+    'as' => 'users',
+    'middleware' => ['auth:sanctum']
 ], function () {
 
     Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
