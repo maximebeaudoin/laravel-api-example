@@ -20,7 +20,7 @@ jobs:
       - run: sudo apt install -y zlib1g-dev libicu-dev
       - run: sudo docker-php-ext-install zip pdo_mysql mysqli bcmath intl pcntl
       - run:
-          name: Setup Laravel testing environment variables for CircleCI test
+          name: Setup Laravel testing environment variable
           command: cp .circleci/.env.circleci .env
       - run: sudo composer self-update
       - restore_cache:
@@ -41,6 +41,17 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: composer control
       - run: composer seed
-      - run: composer test:unit
+      - run:
+          name: Unit tests
+          command: |
+            mkdir -p ~/test-results
+            mkdir -p ~/test-results/phpunit
+            vendor/bin/phpunit --log-junit ~/test-results/phpunit/junit.xml --colors=always
       - run: composer seed
-      - run: composer test:features
+      - run:
+          name: Feature tests
+          command: |
+            mkdir -p ~/test-results/behat
+            vendor/bin/behat -f junit -o ~/test-results/behat -f progress -o std --colors
+      - store_test_results:
+          path: ~/test-results
