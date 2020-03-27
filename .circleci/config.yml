@@ -1,0 +1,44 @@
+defaults: &defaults
+  working_directory: ~/laravel-api-example
+  docker:
+    - image: circleci/php:7.4-fpm
+    - image: circleci/mysql:5.7
+      environment:
+        - MYSQL_ALLOW_EMPTY_PASSWORD: true
+        - MYSQL_DATABASE: laravel-api-example
+        - MYSQL_HOST: 127.0.0.1
+        - MYSQL_USER: root
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    environment:
+      COMPOSER_PROCESS_TIMEOUT: 600
+    steps:
+      - checkout
+      - run:
+          name: Setup Laravel testing environment variables for CircleCI test
+          command: cp .env.circleci .env
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install -n --prefer-dist --optimize-autoloader
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: Run Laravel Server
+          command: php artisan serve --port=8080
+          background: true
+      - run:
+          name: Wait for MySQL
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run: composer control
+       - run: composer seed
+       - run: composer test:unit
+       - run: composer seed
+       - run: composer test:features
