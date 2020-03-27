@@ -17,6 +17,8 @@ jobs:
       COMPOSER_PROCESS_TIMEOUT: 600
     steps:
       - checkout
+      - run: sudo apt install -y zlib1g-dev libpng-dev libicu-dev mysql-client
+      - run: sudo docker-php-ext-install zip pdo_mysql mysqli bcmath intl pcntl
       - run:
           name: Setup Laravel testing environment variables for CircleCI test
           command: cp .circleci/.env.circleci .env
