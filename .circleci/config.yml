@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: Setup Laravel testing environment variables for CircleCI test
-          command: cp .env.circleci .env
+          command: cp .circleci/.env.circleci .env
       - run: sudo composer self-update
       - restore_cache:
           keys:
