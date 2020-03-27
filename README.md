@@ -1,5 +1,6 @@
 # Laravel API example
 
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 
 ## What this example contains
 
