@@ -1,5 +1,10 @@
 Feature: Users endpoint basic CRUD operations
 
+  Scenario: Guest user wasn't authorized to call the api
+    When I am a guest user
+    When I request "GET /users"
+    Then I get a "401" response
+
   Scenario: I can list all users
     When I request "GET /users"
     Then I get a "200" response

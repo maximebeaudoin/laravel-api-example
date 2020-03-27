@@ -92,6 +92,13 @@ class FeatureContext extends TestCase implements Context
             ]
         ]);
     }
+    /**
+     * @When I am a guest user
+     */
+    public function iAmAGuestUser()
+    {
+        $this->accessToken = '';
+    }
 
     /**
      * @Given /^I have the payload:$/

@@ -71,6 +71,13 @@
             "phpcs --standard=phpcs.xml app/"
         ],
         "test:features": "behat --colors --format=progress",
+        "test:unit": "phpunit --colors=always",
+        "test": [
+            "@seed",
+            "@test:unit",
+            "@seed",
+            "@test:features"
+        ],
         "seed": [
             "@php artisan migrate:fresh",
             "@php artisan db:seed --ansi ",
