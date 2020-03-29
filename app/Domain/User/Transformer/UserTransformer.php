@@ -13,6 +13,7 @@ class UserTransformer extends TransformerAbstract
 {
     /**
      * @param User $user
+     * @return array
      */
     public function transform(User $user)
     {
@@ -20,6 +21,8 @@ class UserTransformer extends TransformerAbstract
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'job_title' => $user->job_title,
+            'short_presentation' => $user->short_presentation,
         ];
     }
 }

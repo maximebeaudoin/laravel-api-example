@@ -23,6 +23,8 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Maxime Beaudoin',
                 'email' => 'maxime.beaudoin@github.com',
+                'job_title' => 'Devops Engineer',
+                'short_presentation' => $faker->text,
                 'password' => app('hash')->make('secret'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -33,6 +35,8 @@ class UsersTableSeeder extends Seeder
             $users[] = [
                 'name' => $faker->name,
                 'email' => $faker->email,
+                'job_title' => $faker->jobTitle,
+                'short_presentation' => $faker->text,
                 'password' => app('hash')->make('secret'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

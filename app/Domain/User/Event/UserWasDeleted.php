@@ -3,6 +3,7 @@
 namespace App\Domain\User\Event;
 
 use App\Domain\User\Entity\User;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Class UserWasDeleted
@@ -10,6 +11,8 @@ use App\Domain\User\Entity\User;
  */
 class UserWasDeleted
 {
+    use SerializesModels;
+
     /**
      * @var User
      */

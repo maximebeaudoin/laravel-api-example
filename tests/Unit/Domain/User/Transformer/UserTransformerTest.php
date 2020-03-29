@@ -13,7 +13,9 @@ class UserTransformerTest extends TestCase
         // Data we want to test
         $user = new User([
             'name' => 'John',
-            'email' => 'john.doe@hotmail.com'
+            'email' => 'john.doe@hotmail.com',
+            'job_title' => 'Software Engineer',
+            'short_presentation' => 'I like PHP !'
         ]);
         $user->id = 1;
 
@@ -24,7 +26,9 @@ class UserTransformerTest extends TestCase
         $this->assertSame([
             'id' => 1,
             'name' => 'John',
-            'email' => 'john.doe@hotmail.com'
+            'email' => 'john.doe@hotmail.com',
+            'job_title' => 'Software Engineer',
+            'short_presentation' => 'I like PHP !'
         ], $transformer->transform($user));
 
     }

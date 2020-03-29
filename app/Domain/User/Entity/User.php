@@ -15,6 +15,15 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * Class User
  * @package App\Domain\User\Entity
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $job_title
+ * @property string $short_presentation
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  */
 class User extends Entity implements
     AuthenticatableContract,
@@ -36,6 +45,8 @@ class User extends Entity implements
         'name',
         'email',
         'password',
+        'job_title',
+        'short_presentation'
     ];
 
     /**
