@@ -14,19 +14,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();;
+        $faker = Faker\Factory::create();
+
+        $numberOfUser = 15;
 
         // Create users
         $users = [
             [
-                'id' => 1,
+                'name' => 'Maxime Beaudoin',
+                'email' => 'maxime.beaudoin@github.com',
+                'password' => app('hash')->make('secret'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+        ];
+
+        for ($i = 1; $i <= $numberOfUser; $i++) {
+            $users[] = [
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => app('hash')->make('secret'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]
-        ];
+            ];
+        }
 
         DB::table("users")->insert($users);
 
