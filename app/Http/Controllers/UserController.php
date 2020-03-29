@@ -69,7 +69,9 @@ class UserController extends Controller
         $user = app(CreateUser::class)->handle(
             $request->input('name'),
             $request->input('email'),
-            $request->input('password')
+            $request->input('password'),
+            $request->input('job_title'),
+            $request->input('short_description')
         );
 
         return $this->response
@@ -104,7 +106,9 @@ class UserController extends Controller
         $user = app(UpdateUser::class)->handle(
             $user,
             $request->input('name', $user->name),
-            $request->input('email', $user->email)
+            $request->input('email', $user->email),
+            $request->input('job_title', $user->job_title),
+            $request->input('short_presentation', $user->short_presentation)
         );
 
         return $this->response->withItem($user, new UserTransformer());

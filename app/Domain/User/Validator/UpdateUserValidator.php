@@ -16,5 +16,7 @@ class UpdateUserValidator extends Validator
     protected $rules = [
         'email' => 'max:255|unique:users,email',
         'name' => 'max:255',
+        'job_title' => 'max:255',
+        'short_description' => 'max:500',
     ];
 }

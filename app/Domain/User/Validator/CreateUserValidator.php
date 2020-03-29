@@ -16,6 +16,8 @@ class CreateUserValidator extends Validator
     protected $rules = [
         'email' => 'required|max:255|unique:users,email',
         'name' => 'max:255',
+        'job_title' => 'required|max:255',
+        'short_description' => 'max:500',
         'password' => 'required|min:8|max:64'
     ];
 }

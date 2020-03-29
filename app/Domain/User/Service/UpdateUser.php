@@ -31,14 +31,17 @@ class UpdateUser
      * @param User $user
      * @param string $name
      * @param string $email
+     * @param string $jobTitle
+     * @param string|null $shortPresentation
      * @return User
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function handle(User $user, string $name, string $email): User
+    public function handle(User $user, string $name, string $email, string $jobTitle, string $shortPresentation = null): User
     {
         $user = $this->userRepository->update($user, [
             'name' => $name,
-            'email' => $email
+            'email' => $email,
+            'job_title' => $jobTitle,
+            'short_presentation' => $shortPresentation
         ]);
 
         event(new UserWasUpdated($user));

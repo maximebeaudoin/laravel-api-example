@@ -29,13 +29,18 @@ class CreateUser
     /**
      * @param string $name
      * @param string $email
+     * @param string $password
+     * @param string $jobTitle
+     * @param string|null $shortPresentation
      * @return User
      */
-    public function handle(string $name, string $email, string $password): User
+    public function handle(string $name, string $email, string $password, string $jobTitle, string $shortPresentation = null): User
     {
         $user = $this->userRepository->create([
             'name' => $name,
             'email' => $email,
+            'job_title' => $jobTitle,
+            'short_presentation' => $shortPresentation,
             'password' =>  app('hash')->make($password)
         ]);
 
