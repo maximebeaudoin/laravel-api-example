@@ -54,4 +54,7 @@ jobs:
             mkdir -p ~/test-results/behat
             vendor/bin/behat -f junit -o ~/test-results/behat -f progress -o std --colors
       - store_test_results:
-          path: ~/test-results
+          path: ~/test-results¨
+      - persist_to_workspace:
+          root: ./
+          paths: ./
